@@ -50,3 +50,7 @@ coverage.xml
 
 # pytest
 .pytest_cache/
+
+# local
+setup.cfg
+bitcoin_price_db.json

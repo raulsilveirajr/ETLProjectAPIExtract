@@ -67,3 +67,7 @@ python3 exemplos/exemplo_03.py
 ```bash
 python3 exemplos/exemplo_04.py
 ```
+
+
+## Dashboard Logfire
+https://logfire.pydantic.dev/raulsilveirajr/etl-project-api-extract/dashboards/6cc25f8c-c7c8-4b73-989e-21d0327ef6db
