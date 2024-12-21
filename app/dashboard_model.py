@@ -4,139 +4,135 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
-# 1) st.title - Título principal
-st.title("🚀 Quick Starter Streamlit - Jornada de dados")
+# 1) st.title - Main title
+st.title("🚀 Quick Starter Streamlit - Data Engineering Journey")
 
-# 2) st.header - Seção
-st.header("1. Contexto de Data Engineering")
+# 2) st.header - Section
+st.header("1. Data Engineering Context")
 
-# 3) st.write - Texto simples
+# 3) st.write - Simple text
 st.write(
     """
-    Esse dashboard simula alguns elementos que você usaria em um projeto de Engenharia de Dados:
-    - Coleta/Extração de dados
-    - Transformação e limpeza
-    - Visualização de métricas
-    - Monitoramento de pipelines
+    This dashboard simulates some elements you would use in a Data Engineering project:
+    - Data collection/extraction
+    - Transformation and cleaning
+    - Visualization of metrics
+    - Monitoring of pipelines
     """
 )
 
-# 4) st.markdown - Texto em formato Markdown
+# 4) st.markdown - Markdown text
 st.markdown(
     """
-### Tópicos Abordados:
-- **Criação de widgets** para coleta de parâmetros
-- **Exibição de DataFrames** (parte de "Transform")
-- **Gráficos** para monitorar performance e throughput
-- **Métricas** representando KPIs de pipelines ETL
+### Topics Covered:
+- **Widget creation** for parameter collection
+- **DataFrames display** (part of "Transform")
+- **Charts** to monitor performance and throughput
+- **Metrics** representing ETL pipeline KPIs
 """
 )
 
-st.header("2. Parâmetros para Pipelines")
+st.header("2. Pipeline Parameters")
 
-# 5) st.text_input - Parâmetro textual
-nome_pipeline = st.text_input(
-    "Nome da Pipeline de Dados", value="Pipeline_Ingestao_Bitcoin"
-)
+# 5) st.text_input - Text parameter
+pipeline_name = st.text_input("Pipeline Name", value="Pipeline Bitcoin Ingestion")
 
-# 6) st.number_input - Parâmetro numérico
+# 6) st.number_input - Number parameter
 batch_size = st.number_input(
-    "Batch size (linhas por ingestão):",
+    "Batch size (lines per ingestion):",
     min_value=100,
     max_value=100000,
     value=1000,
     step=100,
 )
 
-# 7) st.slider - Seletor contínuo
-latencia_maxima = st.slider(
-    "Latência Máxima Aceitável (segundos):", min_value=1, max_value=30, value=5
+# 7) st.slider - Continuous selector
+max_latency = st.slider(
+    "Maximum Latency (seconds):", min_value=1, max_value=30, value=5
 )
 
-# 8) st.selectbox - Escolha de um pipeline
-tipo_pipeline = st.selectbox(
-    "Tipo de Pipeline:", ["Batch", "Streaming", "Lambda", "Kappa"]
+# 8) st.selectbox - Select pipeline
+pipeline_type = st.selectbox(
+    "Pipeline Type:", ["Batch", "Streaming", "Lambda", "Kappa"]
 )
 
-# 9) st.multiselect - Escolha múltipla de camadas de processamento
-camadas = st.multiselect(
-    "Quais camadas envolvidas no pipeline?",
+# 9) st.multiselect - Multiple choice of processing layers
+layers = st.multiselect(
+    "Which layers are involved in the pipeline?",
     ["Raw", "Staging", "Trusted", "Analytics", "Sandbox", "Dimensão", "Fato"],
     default=["Raw", "Staging"],
 )
 
-# 10) st.checkbox - Check para simular ativação de logs
-ativar_logs = st.checkbox("Ativar Logs de Execução")
+# 10) st.checkbox - Check to simulate log activation
+activate_logs = st.checkbox("Activate Execution Logs")
 
-st.header("3. Exibição de Dados (Transform)")
+st.header("3. Data Display (Transform)")
 
-# 11) Criar um dataset fictício sobre "execuções" de pipeline
-dados_execucoes = {
+# 11) Create a fictitious dataset about "pipeline executions"
+executions_data = {
     "data_execucao": pd.date_range(end=datetime.now(), periods=5, freq="H"),
-    "status": ["Sucesso", "Sucesso", "Falha", "Sucesso", "Sucesso"],
-    "linhas_processadas": [1000, 1200, 900, 1500, 1300],
-    "tempo_execucao_seg": [4.2, 5.1, 7.8, 3.9, 4.5],
+    "status": ["Success", "Success", "Failure", "Success", "Success"],
+    "processed_lines": [1000, 1200, 900, 1500, 1300],
+    "execution_time_sec": [4.2, 5.1, 7.8, 3.9, 4.5],
 }
-df_execucoes = pd.DataFrame(dados_execucoes)
+df_executions = pd.DataFrame(executions_data)
 
-# 12) st.dataframe - Tabela interativa
-st.subheader("Executões Recentes da Pipeline")
-st.dataframe(df_execucoes)
+# 12) st.dataframe - Interactive table
+st.subheader("Recent Pipeline Executions")
+st.dataframe(df_executions)
 
-# 13) st.table - Tabela estática
-st.subheader("Tabela Estática - Últimas Execuções")
-st.table(df_execucoes)
+# 13) st.table - Static table
+st.subheader("Static Table - Latest Executions")
+st.table(df_executions)
 
-# 14) st.metric - Exibir métricas de KPIs
-st.subheader("Indicadores de Performance (KPIs)")
+# 14) st.metric - Display KPIs metrics
+st.subheader("Performance Indicators (KPIs)")
 col1, col2, col3 = st.columns(3)
-col1.metric(
-    "Total de Linhas Processadas", f"{df_execucoes['linhas_processadas'].sum():,}"
-)
+col1.metric("Total of Lines Processed", f"{df_executions['processed_lines'].sum():,}")
 col2.metric(
-    "Execuções com Sucesso",
-    str(df_execucoes["status"].value_counts().get("Sucesso", 0)),
+    "Success Executions",
+    str(df_executions["status"].value_counts().get("Success", 0)),
 )
 col3.metric(
-    "Execuções com Falha", str(df_execucoes["status"].value_counts().get("Falha", 0))
+    "Failure Executions", str(df_executions["status"].value_counts().get("Failure", 0))
 )
 
-st.header("4. Visualização de Gráficos (Monitor)")
+st.header("4. Chart Display (Monitor)")
 
-# 15) st.line_chart - Gráfico de linha com métricas
-st.subheader("Linhas Processadas por Execução (Line Chart)")
-df_execucoes_ordenado = df_execucoes.sort_values(by="data_execucao")
-st.line_chart(data=df_execucoes_ordenado, x="data_execucao", y="linhas_processadas")
+# 15) st.line_chart - Line chart with metrics
+st.subheader("Lines Processed per Execution (Line Chart)")
+df_ordered_executions = df_executions.sort_values(by="data_execucao")
+st.line_chart(data=df_ordered_executions, x="data_execucao", y="processed_lines")
 
-# 16) st.bar_chart - Gráfico de barras
-st.subheader("Tempo de Execução por Data (Bar Chart)")
-st.bar_chart(data=df_execucoes_ordenado, x="data_execucao", y="tempo_execucao_seg")
+# 16) st.bar_chart - Bar chart
+st.subheader("Execution Time per Data (Bar Chart)")
+st.bar_chart(data=df_ordered_executions, x="data_execucao", y="execution_time_sec")
 
-st.header("5. Outros Recursos Úteis")
+st.header("5. Other Useful Resources")
 
-# 17) st.date_input - Seletor de data
-data_planejada = st.date_input("Data de início para nova pipeline", datetime.now())
+# 17) st.date_input - Date selector
+planned_start_date = st.date_input("Start date for new pipeline", datetime.now())
 
-# 18) st.progress - Barra de progresso (simulação)
-st.write("Carregando dados de log...")
+# 18) st.progress - Progress bar (simulation)
+st.write("Loading log data...")
 progress_bar = st.progress(0)
 for i in range(101):
     time.sleep(0.01)
     progress_bar.progress(i)
 
-# 19) Mensagens de sucesso/erro
-if ativar_logs:
-    st.success("Logs de execução estão ativos.")
+# 19) Success/error messages
+if activate_logs:
+    st.success("Execution logs are active.")
 else:
-    st.warning("Logs de execução estão desativados.")
+    st.warning("Execution logs are inactive.")
 
-# 20) st.button - Botão para simular disparo de pipeline
-if st.button("Disparar Nova Execução"):
-    st.info(f"Pipeline '{nome_pipeline}' disparada em modo {tipo_pipeline}.")
+# 20) st.button - Button to simulate pipeline trigger
+if st.button("Trigger New Execution"):
+    st.info(f"Pipeline '{pipeline_name}' triggered in {pipeline_type} mode.")
     st.write(
-        f"Batch size configurado para {batch_size} linhas. Latência Máxima: {latencia_maxima}s"
+        f"Batch size configured for {batch_size} lines. Maximum Latency: {max_latency}s"
     )
-    st.write(f"Camadas selecionadas: {', '.join(camadas)}")
+    st.write(f"Selected layers: {', '.join(layers)}")
 
 st.markdown("___")
-st.caption("Quick Starter de Streamlit aplicado à Engenharia de Dados. © 2024")
+st.caption("Quick Starter of Streamlit applied to Data Engineering. © 2024")

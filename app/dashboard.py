@@ -18,7 +18,7 @@ POSTGRES_DB = os.getenv("POSTGRES_DB")
 
 
 def ler_dados_postgres():
-    """Lê os dados do banco PostgreSQL e retorna como DataFrame."""
+    """Load data from PostgreSQL and return as DataFrame."""
     try:
         conn = psycopg2.connect(
             host=POSTGRES_HOST,
@@ -32,15 +32,15 @@ def ler_dados_postgres():
         conn.close()
         return df
     except Exception as e:
-        st.error(f"Erro ao conectar no PostgreSQL: {e}")
+        st.error(f"Error connecting to PostgreSQL: {e}")
         return pd.DataFrame()
 
 
 def main():
-    st.set_page_config(page_title="Dashboard de Preços do Bitcoin", layout="wide")
-    st.title("📊 Dashboard de Preços do Bitcoin")
+    st.set_page_config(page_title="Bitcoin Price Dashboard", layout="wide")
+    st.title("📊 Bitcoin Price Dashboard")
     st.write(
-        "Este dashboard exibe os dados do preço do Bitcoin coletados periodicamente em um banco PostgreSQL."
+        "This dashboard displays Bitcoin price data collected periodically from a PostgreSQL database."
     )
 
     df = ler_dados_postgres()
@@ -52,7 +52,7 @@ def main():
         df["timestamp"] = pd.to_datetime(df["timestamp"])
         df = df.sort_values(by="timestamp")
 
-        st.subheader("📈 Evolução do Preço do Bitcoin (by timestamp)")
+        st.subheader("📈 Bitcoin Price Timeline Evolution")
         # st.line_chart(data=df, x="timestamp", y="price", use_container_width=True)
         chart_data = (
             alt.Chart(df)
@@ -75,13 +75,13 @@ def main():
         )
         st.altair_chart(chart_data, use_container_width=True)
 
-        st.subheader("🔢 Estatísticas Gerais")
+        st.subheader("🔢 General Statistics")
         col1, col2, col3 = st.columns(3)
-        col1.metric("Preço Atual", f"${df['price'].iloc[-1]:,.2f}")
-        col2.metric("Preço Máximo", f"${df['price'].max():,.2f}")
-        col3.metric("Preço Mínimo", f"${df['price'].min():,.2f}")
+        col1.metric("Current Price", f"${df['price'].iloc[-1]:,.2f}")
+        col2.metric("Max Price", f"${df['price'].max():,.2f}")
+        col3.metric("Min Price", f"${df['price'].min():,.2f}")
     else:
-        st.warning("Nenhum dado encontrado no banco de dados PostgreSQL.")
+        st.warning("No data found in PostgreSQL database.")
 
 
 if __name__ == "__main__":
