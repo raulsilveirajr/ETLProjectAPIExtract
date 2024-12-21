@@ -1,17 +1,17 @@
 # ETL Project - API Data Extraction
+### Based on https://www.youtube.com/live/xvCwZ73muV8
 
 ## Overview
-This project implements an ETL (Extract, Transform, Load) pipeline that extracts data from various APIs, transforms it according to business rules, and loads it into a target database.
+This project implements an ETL (Extract, Transform, Load) pipeline that extracts data from Coinbase API and loads it into a target database.
 
 ## Features
-- API data extraction with error handling and retry mechanisms
+- API data extraction with error handling
 - Data transformation and cleaning
-- Configurable data loading to different destinations
+- Data loading to a target database
 - Logging and monitoring capabilities
-- Rate limiting support for API calls
 
 ## Prerequisites
-- Python 3.8+
+- Python 3.11+
 - pip (Python package installer)
 - poetry (Python package manager)
 
@@ -28,46 +28,52 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Instale o Poetry (caso ainda não tenha):
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-# No Windows, você pode usar:
-# (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-```
-
-4. Instale as dependências do projeto:
+3. Install the project dependencies:
 ```bash
 poetry install
 ```
 
-5. Ative o ambiente virtual do Poetry:
+## Examples
+The project includes examples of implementation in the `examples/` folder. To run each example, use the following commands:
+
+### Example 01
 ```bash
-poetry shell
+python3 examples/example_01.py
 ```
 
-## Exemplos
-O projeto inclui exemplos de implementação na pasta `exemplos/`. Para executar cada exemplo, use os seguintes comandos:
-
-### Exemplo 01
+### Example 02
 ```bash
-python3 exemplos/exemplo_01.py
+python3 examples/example_02.py
 ```
 
-### Exemplo 02
+### Example 03
 ```bash
-python3 exemplos/exemplo_02.py
+python3 examples/example_03.py
 ```
-
-### Exemplo 03
-```bash
-python3 exemplos/exemplo_03.py
-```
-
+  
 ### Exemplo 04
 ```bash
 python3 exemplos/exemplo_04.py
 ```
 
+# Resources
+
+## Running on render.com 
+https://dashboard.render.com/web/srv-ctittul2ng1s73bf9g30
+
 
 ## Dashboard Logfire
 https://logfire.pydantic.dev/raulsilveirajr/etl-project-api-extract/dashboards/6cc25f8c-c7c8-4b73-989e-21d0327ef6db
+
+![alt text](image.png)
+
+# Dependencies
+- requests
+- python-dotenv
+- tinydb
+- sqlalchemy
+- psycopg2
+- psycopg2-binary
+- logfire (extras = ["requests", "sqlalchemy"], version = "^2.9.0")
+- streamlit
+- pandas
